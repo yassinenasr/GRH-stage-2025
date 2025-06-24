@@ -7,7 +7,6 @@ import ProductsProvider from "./contexts/ProductsProvider";
 import CartProvider from "./contexts/CartProvider";
 import AuthenticateProvider from "./contexts/AuthenticateProvider";
 import Layout from "./layout/Layout";
-import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
@@ -38,8 +37,8 @@ function App() {
                 <Route path="/*" element={<NotFound />} />
                 //preventing user to navigate to auth routes if has loged in already
                 <Route element={<AuthProtected/>}>
-                  <Route path="/auth/signup" element={<Signup />} />
-                  <Route path="/signup" element={<Navigate to={'/auth/signup'}/>} />
+                 
+       
                   <Route path="/auth/login" element={<Login />} />
                   <Route path="/login" element={<Navigate to={'/auth/login'}/>} />
                 </Route>

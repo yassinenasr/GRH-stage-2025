@@ -13,7 +13,7 @@ function ThemeSwitcher() {
     }
     //checking if localstorage has any data about theme
     if (!localStorage.theme) {
-      localStorage.theme = "system";
+      localStorage.theme = "light";
     }
 
     if (

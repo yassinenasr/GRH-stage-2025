@@ -5,7 +5,7 @@ import { FaGithub } from "react-icons/fa";
 function Footer() {
   return (
     <footer>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-20">
+      <div className=" mx-auto px-4 sm:px-6  bg-gray-200">
         {/* Top area: Blocks */}
         <div className="grid sm:grid-cols-12 gap-8 py-8 md:py-12 border-t border-grayshade-50">
           {/* 1st block */}
@@ -76,7 +76,7 @@ function Footer() {
           </div>
 
           {/* 3rd block */}
-          <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
+          <div className="sm:col-span-6 md:col-span-3 lg:col-span-2 ">
             <h6 className="text-purpleshade-300 font-bold mb-2">Resources</h6>
             <ul className="text-sm">
               <li className="mb-2">
@@ -211,7 +211,7 @@ function Footer() {
                     </button>
                   </div>
                   {/* Success message */}
-                  {/* <p className="mt-2 text-green-600 text-sm">Thanks for subscribing!</p> */}
+                  {/* <p className="mt-2 text-gray-600 text-sm">Thanks for subscribing!</p> */}
                 </div>
               </div>
             </form>
