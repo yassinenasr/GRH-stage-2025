@@ -42,7 +42,7 @@ const UserActions = () => {
             >
               <TbUser className="text-2xl xl:text-2xl" />
               <p className="hidden xl:block">
-                welcome
+                Bienvenue	
                 <span className="dark:text-purpleshade-100 text-purpleshade-400">
                   {userInfo.firstName && userInfo.firstName}
                 </span>
@@ -54,19 +54,17 @@ const UserActions = () => {
                 dropDown ? "block" : "hidden"
               } xl:w-full w-max bad dark:bg-grayshade-500 absolute p-4 -right-10 top-[48px] xl:right-0 xl:left-0  [&>li]:list [&>a]:list z-50`}
             >
-              <Link to="/dashboard/employee">
-                <li> Dashboard </li>
+              <Link to="/dashboard/admin">
+                <li> Tableau de bord </li>
               </Link>
               <Link to="/dashboard/my-account">
-                <li> My Account </li>
+                <li> Mon compte </li>
               </Link>
-              <Link to="/dashboard/my-orders">
-                <li>Payed Orders</li>
-              </Link>
+              
               <hr className="mt-2 pt-2 border-t border-grayshade-200 dark:border-grayshade-200" />
               <li onClick={() => logOut()}>
                 <TbLogout2 className="mr-2" />
-                <span>Logout</span>
+                <span>Déconnexion</span>
               </li>
             </ul>
           </button>
@@ -79,7 +77,7 @@ const UserActions = () => {
   to="/auth/login"
 >
   <TbLogin2 className="mr-2" />
-  Login
+  Se Connecter
 </Link>
 
           

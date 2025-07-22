@@ -2,10 +2,10 @@ import React from 'react';
 
 function FeaturesBlock() {
   return (
-    <section className="relative">
+    <section className="relative bg-gray-200 " style={ {borderTop: "2px solid #000000ff"}}>
 
       {/* Section background (needs .relative class on parent and next sibling elements) */}
-      <div className="absolute inset-0 top-1/2 md:mt-24 lg:mt-0 bg-grayshade-400 pointer-events-none" aria-hidden="true"></div>
+      <div className="absolute inset-0 top-1/2 md:mt-24 lg:mt-0 bg-gray-200  pointer-events-none" aria-hidden="true"></div>
       <div className="absolute left-0 right-0 bottom-0 m-auto w-px p-px h-20 bg-gray-200 transform translate-y-1/2"></div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
@@ -13,15 +13,17 @@ function FeaturesBlock() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">How Simple works</h2>
-            <p className="text-xl text-grayshade-50">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
+            <h2 className="h2 mb-4 text-purpleshade-400 text-3xl font-extrabold">Le fonctionnement de notre systéme </h2>
+            <p className="text-xl text-black">Explication des requêtes et des actions possibles sur cette plateforme
+
+</p>
           </div>
 
           {/* Items */}
           <div className="max-w-sm mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start md:max-w-2xl lg:max-w-none">
 
             {/* 1st item */}
-            <div className="relative flex flex-col items-center p-6 bg-lightColor-300 dark:bg-grayshade-300 rounded shadow-xl">
+            <div className="relative flex flex-col items-center p-6 bg-lightColor-300 dark:bg-grayshade-300 rounded shadow-xl ">
               <svg className="w-16 h-16 p-1 -mt-1 mb-2" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <g fill="none" fillRule="evenodd">
                   <rect className="fill-current text-purpleshade-400" width="64" height="64" rx="32" />
@@ -33,8 +35,8 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Initial Contact</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-black">Faire des demandes (congés ou augmentation de salaire)</h4>
+             
             </div>
 
             {/* 2nd item */}
@@ -49,8 +51,10 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Discovery Session</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl text-black font-bold leading-snug tracking-tight mb-1">Consulter vos statistiques
+
+</h4>
+             
             </div>
 
             {/* 3rd item */}
@@ -64,8 +68,8 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Contracting</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl font-bold text-black leading-snug tracking-tight mb-1">Accéder à vos informations personnelles</h4>
+              
             </div>
 
             {/* 4th item */}
@@ -81,8 +85,7 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>              
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Fast Prototyping</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl font-bold text-black leading-snug tracking-tight mb-1">Mettre à jour ses informations personnelles</h4>
             </div>
 
             {/* 5th item */}
@@ -96,8 +99,7 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Design Phase</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl text-black font-bold leading-snug tracking-tight mb-1">Consulter son bilan de congés </h4>
             </div>
 
             {/* 6th item */}
@@ -113,8 +115,8 @@ function FeaturesBlock() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Develop & Listing for sale</h4>
-              <p className="text-grayshade-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h4 className="text-xl  text-black font-bold leading-snug tracking-tight mb-1">Suivre vos demandes et leur état </h4>
+            
             </div>
 
           </div>

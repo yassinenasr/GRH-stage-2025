@@ -11,7 +11,6 @@ const Home = () => {
       <HeroHome />
       <Features />
       <FeaturesBlock />
-      <Testimonials />
       <Newsletter />
     </main>
   );

@@ -1,115 +1,88 @@
-import React from "react";
-import { useAuth } from "../../contexts/AuthenticateProvider";
-import { useFormik } from "formik";
-import { updateInfo as validate } from "../../utils/helpers/formValidator";
-import UpdatePassword from "./UpdatePassword";
-import api from "../../services/axiosConfig";
-import toast from "react-hot-toast";
+import React, { useEffect, useState } from "react";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaUserTag,
+  FaBuilding,
+  FaCalendar,
+} from "react-icons/fa";
+import { getEmployees } from "../../services/service";
 
-function MyAccount() {
-  const {
-    userInfo: { firstName, lastName, email },
-  } = useAuth();
+export default function MyAccount() {
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-    },
-    enableReinitialize: true,
-    validate,
-    onSubmit: (values) => {
-      if (
-        values.firstName === firstName &&
-        values.lastName === lastName &&
-        values.email === email
-      ) {
-        toast.error("No change received", { duration: 3000 });
-        return;
+  // Récupérer matricule depuis localStorage (connecté)
+  const matricule = localStorage.getItem("matricule");
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const data = await getEmployees();
+        setEmployees(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des employés :", error);
+      } finally {
+        setLoading(false);
       }
+    };
+    fetchEmployees();
+  }, []);
 
-      const updatedInfo = JSON.stringify(values);
-      api
-        .post("/user/update", updatedInfo, {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((res) => {
-          if (res.status === 204)
-            toast.success("Changes applied successfully!", { duration: 3000 });
-        })
-        .catch((err) => {
-          toast.error("Somthing went wrong", { duration: 4000 });
-          console.log(err.response.data);
-        });
-    },
-  });
+  // Trouver l'employé connecté
+  const selectedEmployee = employees.find(emp => emp.matricule === matricule);
+
+  if (loading) return <p>Chargement...</p>;
+  if (!selectedEmployee) return <p>Employé non trouvé.</p>;
+
+  // Extraire les infos pour affichage
+  const fullName = `${selectedEmployee.nom} ${selectedEmployee.prenom}`;
+  const firstName = selectedEmployee.prenom || "";
+  const role = selectedEmployee.type || "N/A";
+  const email = selectedEmployee.email || "N/A";
+  const phone = selectedEmployee.matricule || "N/A";
+  const department = selectedEmployee.poste || "N/A";
+  const joinDate = selectedEmployee.grade || "N/A";
+
   return (
-    <div className="flex flex-col xl:flex-row">
-      <form onSubmit={formik.handleSubmit} className="w-full mx-2">
-        <h1 className="text-2xl my-12 font-bold text-center xl:text-left">
-          Account Details
-        </h1>
-        <div className="form-section">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.firstName}
-          />
-          <span>
-            {formik.touched.firstName && formik.errors.firstName
-              ? `*${formik.errors.firstName}`
-              : null}
-          </span>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white shadow-2xl rounded-3xl w-full max-w-4xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Avatar & Name */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center text-5xl font-bold text-blue-600 mb-4">
+            {firstName.charAt(0).toUpperCase()}
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800">{fullName}</h2>
+          <p className="text-sm text-gray-500 capitalize">{role}</p>
         </div>
 
-        <div className="form-section">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.lastName}
-          />
-          <span>
-            {formik.touched.lastName && formik.errors.lastName
-              ? `*${formik.errors.lastName}`
-              : null}
-          </span>
+        {/* Info section */}
+        <div className="flex flex-col justify-center space-y-4 " >
+          <InfoRow icon={<FaEnvelope />} label="Email " value={email} />
+          <InfoRow icon={<FaPhone />} label="Matricule" value={phone} />
+          <InfoRow icon={<FaUserTag />} label="Rôle" value={role.toUpperCase()} />
+          <InfoRow icon={<FaBuilding />} label="Département" value={department.toUpperCase()} />
+          <InfoRow icon={<FaCalendar />} label="Grade" value={joinDate} />
         </div>
 
-        <div className="form-section">
-          <label htmlFor="email">Email Address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          <span>
-            {formik.touched.email && formik.errors.email
-              ? `*${formik.errors.email}`
-              : null}
-          </span>
-        </div>
-        <div className="form-section items-center md:col-span-2">
-          <button type="submit">Submit Details</button>
-        </div>
-      </form>
-      <UpdatePassword />
+        {/* Buttons */}
+        <div className="md:col-span-2 flex justify-center gap-4 mt-6 w-full font-bold">
+  Proud to have {selectedEmployee.nom} {selectedEmployee.prenom} as part of our team!
+</div>
+
+      </div>
     </div>
   );
 }
 
-export default MyAccount;
+function InfoRow({ icon, label, value }) {
+  return (
+    <div className="flex items-center space-x-3 text-gray-700">
+      <div className="text-blue-500 text-xl">{icon}</div>
+      <div>
+        <p className="text-sm font-medium">{label}</p>
+        <p className="text-base">{value}</p>
+      </div>
+    </div>
+  );
+}

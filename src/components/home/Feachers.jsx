@@ -29,10 +29,10 @@ function Features() {
   }, [tab]);
 
   return (
-    <section className="relative">
+    <section className="relative bg-gray-200 " style={ {borderTop: "2px solid #000000ff"}}>
       {/* Section background (needs .relative class on parent and next sibling elements) */}
       <div
-        className="absolute inset-0 bg-lightColor-300 dark:bg-grayshade-400 pointer-events-none mb-16"
+        className="absolute inset-0 bg-gray-200 dark:bg-grayshade-400 pointer-events-none mb-16"
         aria-hidden="true"
       ></div>
       <div className="absolute left-0 right-0 -top-11 m-auto w-px p-px h-20 bg-gray-200 "></div>
@@ -41,11 +41,10 @@ function Features() {
         <div className="pt-12 md:pt-20">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4">Explore the solutions</h1>
-            <p className="text-xl text-grayshade-50">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur excepteur sint occaecat
-              cupidatat.
+            <h1 className="h2 mb-4 text-purpleshade-400 text-3xl font-extrabold">Les fonctionnalités de notre plateforme</h1>
+            <p className="text-xl text-black">
+                                Des requêtes simples et explicatives pour faciliter l’utilisation de notre système de gestion des ressources humaines (GRH).
+
             </p>
           </div>
 
@@ -56,20 +55,13 @@ function Features() {
               className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6"
               data-aos="fade-right"
             >
-              <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                <h3 className="h3 mb-3">Powerful suite of tools</h3>
-                <p className="text-xl text-grayshade-50">
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa.
-                </p>
-              </div>
+              
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
                 <a
                   className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
                     tab !== 1
-                      ? "bg-lightColor-300 dark:bg-grayshade-300 shadow-md border-lightColor-100 dark:border-grayshade-200 hover:shadow-lg"
+                       ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
                       : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
                   }`}
                   href="#0"
@@ -80,11 +72,10 @@ function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Simple shoping ecosystem
-                    </div>
+Notre Platforme GRH                     </div>
                     <div className="text-grayshade-50">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Atque sit culpa distinctio.
+                         Notre plateforme est simple et intuitive : vous y trouverez une page d’accueil générale, une section “À propos” présentant les informations sur les développeurs et les technologies utilisées, ainsi qu’un tableau de bord personnalisé accessible après connexion pour chaque employé.
+
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">
@@ -94,7 +85,7 @@ function Features() {
                 <a
                   className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
                     tab !== 2
-                      ? "bg-lightColor-300 dark:bg-grayshade-300 shadow-md border-lightColor-100 dark:border-grayshade-200 hover:shadow-lg"
+                      ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
                       : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
                   }`}
                   href="#0"
@@ -105,11 +96,10 @@ function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Simple shoping ecosystem
-                    </div>
+Connexion vers la tableau de bord                    </div>
                     <div className="text-grayshade-50">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Atque sit culpa distinctio.
+                         La connexion dépend de votre rôle (Admin, Employé ou Responsable), chaque profil dispose de son propre tableau de bord personnalisé.
+
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">
@@ -119,7 +109,7 @@ function Features() {
                 <a
                   className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
                     tab !== 3
-                      ? "bg-lightColor-300 dark:bg-grayshade-300 shadow-md border-lightColor-100 dark:border-grayshade-200 hover:shadow-lg"
+                      ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
                       : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
                   }`}
                   href="#0"
@@ -130,11 +120,11 @@ function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">
-                      Simple shoping ecosystem
-                    </div>
+Tableau de bord                   </div>
                     <div className="text-grayshade-50">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Atque sit culpa distinctio.
+                      Employee : peut trouver son informations personnelle et ses demandes de congés ou augmentation de salaire et aussi il peut faire les demandes, 
+    RH : peut trouver son informations personnelle et ses demandes de congés ou augmentation de salaire et aussi il peut faire les demandes et aussi il trouve tous les statisques des employee et leur demande et il peut accepter ou refuser, 
+    Responsable : peut faire tous les actions employee et RH mais les demandes de RH il peut accepter ou refuser juste lui meme.
                     </div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">

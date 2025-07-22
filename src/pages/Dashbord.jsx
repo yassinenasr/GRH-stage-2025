@@ -12,12 +12,12 @@ function Dashbord() {
   } = useAuth();
 
   const handleLogout = () => {
-    logOut(); // Clear auth
-    navigate("/", { replace: true }); // Redirect to home
+    logOut(); 
+    navigate("/", { replace: true }); 
   };
   return (
-    <div className=" wrapper-full bg-lightColor-300 dark:bg-grayshade-300 flex flex-col xl:flex-row justify-between text-black dark:text-white">
-      <aside className="xl:w-3/12 w-full min-w-max h-max p-14 bg-lightColor-100 dark:bg-grayshade-500 rounded-xl">
+    <div className="  bg-lightColor-300 dark:bg-grayshade-300 flex flex-col xl:flex-row justify-between text-black dark:text-white">
+      {/* <aside className="xl:w-3/12 w-full min-w-max h-max p-14 bg-lightColor-100 dark:bg-grayshade-500 rounded-xl">
         <ul className="flex flex-col font-bold text-2xl [&>li]:list [&>a]:list [&>li]:p-4 [&>a]:p-4">
           <Link to={"my-account"}>
             <TbUser className="mr-2" />
@@ -35,11 +35,11 @@ function Dashbord() {
             <span>Logout</span>
           </li>
         </ul>
-      </aside>
-      <div className="xl:w-9/12 w-full mt-2 xl:mt-0 xl:ml-20 xl:p-16 p-4 bg-lightColor-100 dark:bg-grayshade-500 rounded-xl">
-        <div className="text-3xl mb-6">
+      </aside> */}
+      <div className=" w-full   bg-lightColor-100 dark:bg-grayshade-500 rounded-xl">
+        <div className="text-3xl ">
           <p>
-            Hello{" "}
+            
             <span className="text-purpleshade-400 font-extrabold">
               {firstName} {lastName}
             </span>

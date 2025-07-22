@@ -39,11 +39,7 @@ function Header() {
         <RiMenu3Fill className="text-purpleshade-300 text-2xl font-bold" />
       </div>
 
-      <img
-        className="absolute top-0 left-0 max-h-[67px] lg:max-h-[81px] w-full h-full object-cover"
-        src={AbstractDesign}
-        alt="bg-header"
-      />
+     
 
       <div className="w-full flex items-center justify-end min-[490px]:justify-around">
         <Link
@@ -61,13 +57,13 @@ function Header() {
           <ul className="flex flex-col items-center xl:flex-row min-w-max w-screen xl:w-[400px] xl:justify-around text-xl text-gray-800 dark:text-white">
             <li className="my-5 xl:my-2">
               <Link to="/" onClick={() => openNavOpen(false)}>
-                Home
+                Accueil	
               </Link>
             </li>
             
             <li className="my-5 xl:my-2">
               <Link to="/about" onClick={() => openNavOpen(false)}>
-                About
+                À propos	
               </Link>
             </li>
           </ul>

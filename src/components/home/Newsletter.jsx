@@ -7,12 +7,12 @@ function Newsletter() {
        Aos.init(); 
     },[])
   return (
-    <section>
+    <section className="relative bg-gray-200 " style={ {borderTop: "2px solid #000000ff", borderBottom :"2px solid #000000ff"}}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pb-12 md:pb-20">
 
           {/* CTA box */}
-          <div className="relative bg-grayshade-400 rounded py-10 px-8 md:py-16 md:px-12 shadow-2xl overflow-hidden" data-aos="zoom-y-out">
+          <div className="relative bg-grayshade-400 rounded py-10 px-8 md:py-16 md:px-12 shadow-2xl overflow-hidden mt-4" data-aos="zoom-y-out">
 
             {/* Background illustration */}
             <div className="absolute right-0 bottom-0 pointer-events-none hidden lg:block" aria-hidden="true">
@@ -43,16 +43,16 @@ function Newsletter() {
             <div className="relative flex flex-col lg:flex-row justify-between items-center">
 
               {/* CTA content */}
-              <div className="text-center lg:text-left lg:max-w-xl">
-                <h3 className="h3 text-white mb-2">Powering your business</h3>
-                <p className="text-gray-300 text-lg mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit nemo expedita voluptas culpa sapiente.</p>
+              <div className="text-center lg:text-left lg:max-w-xl"> 
+                <h3 className="h2 mb-4 text-purpleshade-400 text-3xl font-extrabold text-center ">N’hésitez pas</h3>
+                <p className="text-gray-300 text-lg mb-6">Vous disposez d’un champ pour laisser une question ou un avis concernant notre plateforme, ainsi qu’un champ pour renseigner votre adresse e-mail si nous avons besoin de vous contacter.</p>
 
                 {/* CTA form */}
                 <form className="w-full lg:w-auto">
-                  <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:mx-0">
-                    <input type="email" className="w-full appearance-none bg-grayshade-400 border border-grayshade-200 focus:border-grayshade-100 focus:outline-none rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Your email…" aria-label="Your email…" />
-                    <a className="btn text-white bg-purpleshade-400 hover:bg-purpleshade-300 shadow" href="#0">Subscribe</a>
-                  </div>
+                                                          <input type="text" className="w-full appearance-none bg-grayshade-400 border border-grayshade-200 focus:border-grayshade-100 focus:outline-none rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Question/Avis" aria-label="Your email…" />
+
+                    <input type="email" className="w-full appearance-none bg-grayshade-400 border border-grayshade-200 focus:border-grayshade-100 mt-4 focus:outline-none rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Your email…" aria-label="Votre email…" />
+                    <a className="btn text-white bg-purpleshade-400 hover:bg-purpleshade-300 shadow w-full px-4 py-3 mb-2 mt-4" href="#0">Envoyer </a>
                 </form>
               </div>
 
