@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthenticateProvider";
 import { login } from "../services/service";
+import CryptoJS from "crypto-js";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,24 +23,33 @@ function Login() {
     const enteredEmail = values.email.trim().toLowerCase();
     const enteredPassword = values.password;
 
-    const result = await login(enteredEmail, enteredPassword);
-    const user = result.employee;
+    const token = await login(enteredEmail, enteredPassword);
+    let type;
+    try {
+      const decoded = jwtDecode(token);
+      type = decoded.employee.type;
+      
+      // **Ajout ici : stockage de l'id et du matricule dans localStorage**
+      localStorage.setItem("employeeId", decoded.employee.id);
+      localStorage.setItem("matricule", decoded.employee.matricule);
 
-    setIsAuthenticated(true);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Invalid JWT:", error);
+      return null;
+    }
     toast.success("Connexion réussie !", { duration: 3000 });
-
-    if (user.type === "admin") {
+    if (type === "admin") {
       navigate("/dashboard/admin", { replace: true });
-    } else if (user.type === "responsable") {
+    } else if (type === "responsable") {
       navigate("/dashboard/responsable", { replace: true });
-    } else if (user.type === "employee") {
+    } else if (type === "employee") {
       navigate("/dashboard/employee", { replace: true });
     } else {
       toast.error("Type d'utilisateur inconnu", { duration: 3000 });
       navigate("/", { replace: true });
     }
   } catch (error) {
-    // `error.message` is from the backend now
     toast.error(error.message || "Erreur de connexion", { duration: 4000 });
   }
 }
@@ -53,7 +64,10 @@ function Login() {
         </div>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-1 text-gray-700 text-black">
+            <label
+              htmlFor="email"
+              className="block mb-1 text-gray-700 text-black"
+            >
               Email Address
             </label>
             <input

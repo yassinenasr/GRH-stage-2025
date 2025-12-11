@@ -16,7 +16,17 @@ import {
 } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
-
+import { logout } from "../../services/service";
+import { useAuth } from '../../contexts/AuthenticateProvider';
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 export default function EmployeeDashboard() {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
@@ -26,6 +36,7 @@ export default function EmployeeDashboard() {
 const [demandesAcceptees, setDemandesAcceptees] = useState([]);
 const [demandesEnAttente, setDemandesEnAttente] = useState([]);
 const [demandesRefusees, setDemandesRefusees] = useState([]);
+const { logOut } = useAuth(); // ✅ this is needed for logout to work
 const employeeMatricule = localStorage.getItem("matricule");
 const [demandeConge, setDemandesConge] = useState([]);
 const [demandeAug, setDemandesAug] = useState([]);
@@ -146,10 +157,7 @@ useEffect(() => {
         <div className="mt-auto pt-6">
           <button
             className="flex items-center gap-2 text-red-300 hover:text-red-500"
-            onClick={() => {
-              localStorage.clear();
-              navigate("/login");
-            }}
+            onClick={() => handleLogout({ logOut })}
           >
             <FaSignOutAlt /> Déconnexion
           </button>

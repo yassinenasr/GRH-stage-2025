@@ -5,6 +5,8 @@ import { Doughnut, Bar } from "react-chartjs-2";
 import { getEmployees , getCongesByMatricule ,getEvaluations} from "../../services/service"; 
 import { getDemandesCountByMatricule } from "../../services/service";
 import { getDemandes } from "../../services/service";
+import { useAuth } from "../../contexts/AuthenticateProvider";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -16,6 +18,17 @@ import {
 } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+import { logout } from "../../services/service";
+
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 // function EmployeesTable() {
 //   const [employees, setEmployees] = useState([]);
 
@@ -33,6 +46,8 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [conges, setConges] = useState([]);
+  const { logOut } = useAuth(); // ✅ this is needed for logout to work
+
   const [matricule, setMatricule] = useState(null);
   const [evaluations, setEvaluations] = useState([]);
   const [demandesCount, setDemandesCount] = useState(0);
@@ -104,9 +119,13 @@ const rest=  conges.length > 0
           </button>
         </nav>
         <div className="mt-auto pt-6">
-          <button className="flex items-center gap-2 text-red-300 hover:text-red-500">
-            <FaSignOutAlt /> Déconnexion
-          </button>
+         <button
+  className="flex items-center gap-2 text-red-300 hover:text-red-500"
+  onClick={() => handleLogout({ logOut })}
+>
+  <FaSignOutAlt /> Déconnexion
+</button>
+
         </div>
       </aside>
 

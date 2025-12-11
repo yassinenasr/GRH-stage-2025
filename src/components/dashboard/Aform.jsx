@@ -3,10 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { FaUsers, FaEnvelope, FaSignOutAlt , FaCalendarAlt, FaChartBar, FaFileAlt
  } from 'react-icons/fa';
-import { addDemande } from '../../services/service';
-
+import { addNewDemande  } from '../../services/service';
+import { logout } from "../../services/service";
+import { useAuth } from '../../contexts/AuthenticateProvider';
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 const Aform = () => {
   const navigate = useNavigate();
+    const { logOut } = useAuth(); // ✅ this is needed for logout to work
+  
   const [formData, setFormData] = useState({
     employeeName: '',
     matricule: '',
@@ -44,7 +56,7 @@ const Aform = () => {
       submissionDate: formData.submissionDate,
     };
     try {
-      await addDemande(data);
+      await addNewDemande (data);
       console.log("Demande enregistrée : ", data);
     } catch (error) {
       console.error("Erreur ajout demande : ", error);
@@ -90,7 +102,7 @@ const Aform = () => {
                </button>
              </nav>
              <div className="mt-auto pt-6">
-               <button className="flex items-center gap-2 text-red-300 hover:text-red-500">
+               <button className="flex items-center gap-2 text-red-300 hover:text-red-500"  onClick={() => handleLogout({ logOut })}>
                  <FaSignOutAlt /> Déconnexion
                </button>
              </div>

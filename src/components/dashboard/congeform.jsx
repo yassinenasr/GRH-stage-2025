@@ -2,9 +2,21 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { FaUsers, FaCalendarAlt, FaChartBar, FaSignOutAlt, FaEnvelope } from 'react-icons/fa';
-
+import { logout } from "../../services/service";
+import { useAuth } from '../../contexts/AuthenticateProvider';
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 const CongeForm = () => {
   const navigate = useNavigate();
+      const { logOut } = useAuth(); // ✅ this is needed for logout to work
+  
   const [formData, setFormData] = useState({
     employeeName: '',
     departmentAndPosition: '',
@@ -63,7 +75,7 @@ const CongeForm = () => {
           <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded"><FaChartBar /> Performance des employés</button>
         </nav>
         <div className="mt-auto pt-6">
-          <button className="flex items-center gap-2 text-red-300 hover:text-red-500"><FaSignOutAlt /> Déconnexion</button>
+          <button className="flex items-center gap-2 text-red-300 hover:text-red-500"   onClick={() => handleLogout({ logOut })} ><FaSignOutAlt /> Déconnexion</button>
         </div>
       </aside>
 
@@ -117,6 +129,7 @@ const CongeForm = () => {
 
           <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Soumettre</button>
         </form>
+        
       </main>
     </div>
   );

@@ -13,13 +13,23 @@ import {
   BarElement,
 } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
-
+import { logout } from "../../services/service";
+import { useAuth } from '../../contexts/AuthenticateProvider';
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 export default function PerfDashboard() {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [conges, setConges] = useState([]);
   const [matricule, setMatricule] = useState(null);
-
+ const { logOut } = useAuth(); // ✅ this is needed for logout to work
   const rest = conges.length > 0
     ? conges.reduce((total, c) => total + c.nbjour, 0)
     : 0;
@@ -77,7 +87,7 @@ export default function PerfDashboard() {
           </button>
         </nav>
         <div className="mt-auto pt-6">
-          <button className="flex items-center gap-2 text-red-300 hover:text-red-500">
+          <button className="flex items-center gap-2 text-red-300 hover:text-red-500" onClick={() => handleLogout({ logOut })}>
             <FaSignOutAlt /> Déconnexion
           </button>
         </div>

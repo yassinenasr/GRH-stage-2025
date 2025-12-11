@@ -1,19 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaUsers, FaCalendarAlt, FaChartBar, FaSignOutAlt, FaEnvelope } from "react-icons/fa";
+import {
+  FaUsers,
+  FaCalendarAlt,
+  FaChartBar,
+  FaSignOutAlt,
+  FaEnvelope,
+} from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { getDemandesByMatricule } from "../../services/service";
-export default function DemandesE() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [demandes, setDemandes] = useState([]);
-  // Fake employee matricule - replace with actual user context or login
-const employeeMatricule = localStorage.getItem("matricule");
+import { getDemandesByMatricule, addNewDemande, logout } from "../../services/service";
+import { useAuth } from "../../contexts/AuthenticateProvider";
 
-useEffect(() => {
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();
+    logOut();
+    window.location.href = "/home";
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
+
+export default function DemandesE() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [demandes, setDemandes] = useState([]);
+  const [formData, setFormData] = useState({
+    typeDemande: "congé",
+    dateSoumission: new Date().toISOString().slice(0, 10),
+  });
+
+  const navigate = useNavigate();
+  const { logOut } = useAuth();
+  const location = useLocation();
+  const employeeMatricule = localStorage.getItem("matricule");
+  const idEmployee = localStorage.getItem("idEmployee"); // must be stored at login
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const fetchData = async () => {
     try {
-      const employeeMatricule = localStorage.getItem("matricule");
       const data = await getDemandesByMatricule(employeeMatricule);
       setDemandes(data);
     } catch (error) {
@@ -21,35 +47,68 @@ useEffect(() => {
     }
   };
 
-  fetchData();
+  useEffect(() => {
+    fetchData();
 
-  if (location.state?.submitted) {
-    toast.success("Demande de congé soumise avec succès !");
-  }
-}, [location]);
+    if (location.state?.submitted) {
+      toast.success("Demande de congé soumise avec succès !");
+    }
+  }, [location]);
 
+  const handleFormChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const demandePayload = {
+      typeDemande: formData.typeDemande,
+      etat: "en attente",
+      idEmployee,
+    };
+
+    try {
+      await addNewDemande(demandePayload);
+      toast.success("Demande ajoutée avec succès !");
+      closeModal();
+      fetchData(); // refresh demandes
+    } catch (error) {
+      toast.error("Échec de l'ajout de la demande");
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
       {/* Sidebar */}
-    <aside className="w-64 bg-gray-900 text-white flex flex-col p-4">
-            <h1 className="text-2xl font-bold mb-6">Tableau de bord Employé</h1>
-            <nav className="flex flex-col gap-4">
-              <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded" onClick={() => navigate("/dashboard/employee")}>
-                <FaUsers /> Profile Employé 
-              </button>
-             
-              <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded" onClick={() => navigate("/dashboard/demandesE")}>
-                <FaEnvelope /> Mes demandes 
-              </button>
-             
-            </nav>
-            <div className="mt-auto pt-6">
-              <button className="flex items-center gap-2 text-red-300 hover:text-red-500">
-                <FaSignOutAlt /> Déconnexion
-              </button>
-            </div>
-          </aside>
+      <aside className="w-64 bg-gray-900 text-white flex flex-col p-4">
+        <h1 className="text-2xl font-bold mb-6">Tableau de bord Employé</h1>
+        <nav className="flex flex-col gap-4">
+          <button
+            className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded"
+            onClick={() => navigate("/dashboard/employee")}
+          >
+            <FaUsers /> Profile Employé
+          </button>
+          <button
+            className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded"
+            onClick={() => navigate("/dashboard/demandesE")}
+          >
+            <FaEnvelope /> Mes demandes
+          </button>
+        </nav>
+        <div className="mt-auto pt-6">
+          <button
+            className="flex items-center gap-2 text-red-300 hover:text-red-500"
+            onClick={() => handleLogout({ logOut })}
+          >
+            <FaSignOutAlt /> Déconnexion
+          </button>
+        </div>
+      </aside>
 
       {/* Main Content */}
       <main className="flex-1 bg-gray-100 p-6">
@@ -76,7 +135,7 @@ useEffect(() => {
               demandes.map((d) => (
                 <tr key={d.id} className="hover:bg-gray-100">
                   <td className="border px-4 py-2 text-center">{d.id}</td>
-<td className="border px-4 py-2">{d.employee?.matricule}</td>
+                  <td className="border px-4 py-2">{d.employee?.matricule}</td>
                   <td className="border px-4 py-2">{d.typeDemande}</td>
                   <td className="border px-4 py-2">
                     {new Date(d.dateSoumission).toLocaleDateString("fr-FR")}
@@ -102,11 +161,68 @@ useEffect(() => {
           <button
             type="button"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-            onClick={() => navigate("/dashboard/congeformE")}
+            onClick={openModal}
           >
             Demander un congé
           </button>
         </div>
+
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-96 relative">
+              <button
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                onClick={closeModal}
+              >
+                ✕
+              </button>
+              <h3 className="text-xl font-bold mb-4">Nouvelle demande</h3>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                 <label>
+    Matricule :
+    <input
+      type="text"
+      value={employeeMatricule}
+      readOnly
+      className="border p-2 rounded w-full bg-gray-100 cursor-not-allowed"
+    />
+  </label>
+                <label>
+                  Type de demande :
+                  <select
+                    name="typeDemande"
+                    className="border p-2 rounded w-full"
+                    value={formData.typeDemande}
+                    onChange={handleFormChange}
+                    required
+                  >
+                    <option value="congé">Congé</option>
+                    <option value="augmentation de salaire">Augmentation de salaire</option>
+                  </select>
+                </label>
+
+                <label>
+                  Date de soumission :
+                  <input
+                    type="month"
+                    name="dateSoumission"
+                    className="border p-2 rounded w-full"
+                    value={formData.dateSoumission.slice(0, 7)}
+                    onChange={handleFormChange}
+                    required
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                >
+                  Soumettre
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

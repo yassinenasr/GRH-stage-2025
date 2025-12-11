@@ -13,16 +13,33 @@ import {
   BarElement,
 } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+import { logout } from "../../services/service";
+import { useAuth } from '../../contexts/AuthenticateProvider';
+import { addNewEvaluation } from "../../services/service"; // à adapter selon ton chemin
 
+
+import { toast } from 'react-hot-toast';
+export const handleLogout = async ({ logOut }) => {
+  try {
+    await logout();     // backend logout
+    logOut();           // clear local state/context
+    window.location.href = "/home"; // full page reload
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
 export default function PerfRDashboard() {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [conges, setConges] = useState([]);
   const [matricule, setMatricule] = useState(null);
-const [isModalOpen, setIsModalOpen] = useState(false);
 const [rating, setRating] = useState("");
 const [comment, setComment] = useState("");
-
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [note, setNote] = useState("");
+const [mois, setMois] = useState("");
+const [primes, setPrimes] = useState("");
+const { logOut } = useAuth(); // ✅ this is needed for logout to work
 const openModal = () => {
   setIsModalOpen(true);
 };
@@ -30,14 +47,28 @@ const openModal = () => {
 const closeModal = () => {
   setIsModalOpen(false);
 };
-
-const handleSubmitEvaluation = (e) => {
+const handleSubmitEvaluation = async (e) => {
   e.preventDefault();
-  console.log("Note :", rating, "Commentaire :", comment);
-  // Ici tu peux appeler une API ou autre logique
-  setRating("");
-  setComment("");
-  closeModal();
+  const evaluation = {
+    matricule,
+    note: parseFloat(note),
+    mois,
+    primes: parseFloat(primes),
+  };
+
+  try {
+    await addNewEvaluation(evaluation);
+    toast.success("Évaluation envoyée avec succès !");
+    console.log("Évaluation envoyée avec succès !");
+    closeModal();
+    setNote("");
+    setMois("");
+    setPrimes("");
+    setMatricule("");
+  } catch (error) {
+    console.error("Erreur lors de l'envoi de l'évaluation :", error);
+    toast.error("Erreur lors de l'envoi de l'évaluation");
+  }
 };
 
   const rest = conges.length > 0
@@ -101,7 +132,7 @@ const handleSubmitEvaluation = (e) => {
                 </button>
               </nav>
               <div className="mt-auto pt-6">
-                <button className="flex items-center gap-2 text-red-300 hover:text-red-500">
+                <button className="flex items-center gap-2 text-red-300 hover:text-red-500" onClick={() => handleLogout({ logOut })}>
                   <FaSignOutAlt /> Déconnexion
                 </button>
               </div>
@@ -326,56 +357,58 @@ const handleSubmitEvaluation = (e) => {
         </button>
         <h3 className="text-xl font-bold mb-4">Évaluer l’employé</h3>
         <form onSubmit={handleSubmitEvaluation} className="flex flex-col gap-3">
-            
           <label>
-            Matricule de l'employé :
-            <input
-              type="text"
-             
-              required
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <label>
-            Note :
-            <input
-              type="number"
-              min="0"
-              max="20"
-              required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <label>
-            Prime :
-            <input
-              type="number"
-              min="0"
-              required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          
-          
-          
-          <label>
-            Date de soumission :
-            <input
-              type="date"
-              required
-             
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-          >
-            Soumettre
-          </button>
-        </form>
+    Matricule :
+    <input
+      type="text"
+      value={matricule}
+      onChange={(e) => setMatricule(e.target.value)}
+      required
+      className="border p-2 rounded w-full"
+    />
+  </label>
+  <label>
+    Note :
+    <input
+      type="number"
+      min="0"
+      max="20"
+      value={note}
+      onChange={(e) => setNote(e.target.value)}
+      required
+      className="border p-2 rounded w-full"
+    />
+  </label>
+  <label>
+    Prime :
+    <input
+      type="number"
+      min="0"
+      value={primes}
+      onChange={(e) => setPrimes(e.target.value)}
+      required
+      className="border p-2 rounded w-full"
+    />
+  </label>
+  <label>
+    Mois :
+    <input
+      type="month"
+      value={mois}
+      onChange={(e) => setMois(e.target.value)}
+      required
+      className="border p-2 rounded w-full"
+    />
+  </label>
+  <button
+    type="submit"
+    className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+    onClick={handleSubmitEvaluation}
+  >
+    Soumettre
+  </button>
+</form>
+
       </div>
     </div>
   )}
