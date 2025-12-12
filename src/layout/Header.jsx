@@ -46,7 +46,7 @@ function Header() {
           className="lg:text-5xl md:text-4xl sm:text-xl font-extrabold xl:mr-8 z-20 text-gray-800 dark:text-white"
           to={"/"}
         >
-          <h1>MTC</h1>
+          <h1>MTC ENET'Com</h1>
         </Link>
 
         <div
