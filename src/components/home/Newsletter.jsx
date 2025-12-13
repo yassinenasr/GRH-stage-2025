@@ -1,66 +1,73 @@
 import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import telecomDay from '../../assets/manifestation_telecom_day.png';
+import forum from '../../assets/manifestation_forum.png';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 function Newsletter() {
-    useEffect(() => {
-       Aos.init(); 
-    },[])
+  useEffect(() => {
+    Aos.init();
+  }, [])
+
+  const events = [
+    {
+      id: 1,
+      image: telecomDay,
+      date: "4. Feb. 2023",
+      title: "Telecom Day"
+    },
+    {
+      id: 2,
+      image: forum,
+      date: "18. Nov. 2023",
+      title: "8ème forum annuel de l'école IEEE 8.0"
+    }
+  ];
+
   return (
-    <section className="relative bg-gray-200 " style={ {borderTop: "2px solid #000000ff", borderBottom :"2px solid #000000ff"}}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="pb-12 md:pb-20">
+    <section className="relative bg-white py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-          {/* CTA box */}
-          <div className="relative bg-grayshade-400 rounded py-10 px-8 md:py-16 md:px-12 shadow-2xl overflow-hidden mt-4" data-aos="zoom-y-out">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6 md:mb-0">
+            Manifestations
+          </h2>
+          <div className="max-w-xl text-gray-600">
+            <p>
+              L'alignement sur les standards internationaux, conduit à se développer à l'international, à co-construire ses programmes
+            </p>
+          </div>
+        </div>
 
-            {/* Background illustration */}
-            <div className="absolute right-0 bottom-0 pointer-events-none hidden lg:block" aria-hidden="true">
-              <svg width="428" height="328" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <radialGradient cx="35.542%" cy="34.553%" fx="35.542%" fy="34.553%" r="96.031%" id="ni-a">
-                    <stop stopColor="#c6afff" offset="0%" />
-                    <stop stopColor="#5c1bff" offset="44.317%" />
-                    <stop stopColor="#4b03ff" offset="100%" />
-                  </radialGradient>
-                </defs>
-                <g fill="none" fillRule="evenodd">
-                  <g fill="#b99dff">
-                    <ellipse fillOpacity=".04" cx="185" cy="15.576" rx="16" ry="15.576" />
-                    <ellipse fillOpacity=".24" cx="100" cy="68.402" rx="24" ry="23.364" />
-                    <ellipse fillOpacity=".12" cx="29" cy="251.231" rx="29" ry="28.231" />
-                    <ellipse fillOpacity=".64" cx="29" cy="251.231" rx="8" ry="7.788" />
-                    <ellipse fillOpacity=".12" cx="342" cy="31.303" rx="8" ry="7.788" />
-                    <ellipse fillOpacity=".48" cx="62" cy="126.811" rx="2" ry="1.947" />
-                    <ellipse fillOpacity=".12" cx="78" cy="7.072" rx="2" ry="1.947" />
-                    <ellipse fillOpacity=".64" cx="185" cy="15.576" rx="6" ry="5.841" />
-                  </g>
-                  <circle fill="url(#ni-a)" cx="276" cy="237" r="200" />
-                </g>
-              </svg>
-            </div>
-
-            <div className="relative flex flex-col lg:flex-row justify-between items-center">
-
-              {/* CTA content */}
-              <div className="text-center lg:text-left lg:max-w-xl"> 
-                <h3 className="h2 mb-4 text-purpleshade-400 text-3xl font-extrabold text-center ">N’hésitez pas</h3>
-                <p className="text-gray-300 text-lg mb-6">Vous disposez d’un champ pour laisser une question ou un avis concernant notre plateforme, ainsi qu’un champ pour renseigner votre adresse e-mail si nous avons besoin de vous contacter.</p>
-
-                {/* CTA form */}
-                <form className="w-full lg:w-auto">
-                                                          <input type="text" className="w-full appearance-none bg-grayshade-400 border border-grayshade-200 focus:border-grayshade-100 focus:outline-none rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Question/Avis" aria-label="Your email…" />
-
-                    <input type="email" className="w-full appearance-none bg-grayshade-400 border border-grayshade-200 focus:border-grayshade-100 mt-4 focus:outline-none rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Your email…" aria-label="Votre email…" />
-                    <a className="btn text-white bg-purpleshade-400 hover:bg-purpleshade-300 shadow w-full px-4 py-3 mb-2 mt-4" href="#0">Envoyer </a>
-                </form>
+        {/* Events Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          {events.map((event) => (
+            <div key={event.id} className="flex flex-col" data-aos="fade-up">
+              {/* Image */}
+              <div className="relative overflow-hidden rounded-lg shadow-lg mb-6 aspect-video group">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
+              {/* Date */}
+              <div className="flex items-center text-gray-600 mb-3">
+                <FaCalendarAlt className="mr-2" />
+                <span className="text-sm font-medium">{event.date}</span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+                {event.title}
+              </h3>
             </div>
-
-          </div>
-
+          ))}
         </div>
+
       </div>
     </section>
   );

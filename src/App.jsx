@@ -30,6 +30,9 @@ import Aform from "./components/dashboard/Aform";
 import DemandesR from "./components/dashboard/demandesR";
 import DemandesTR from "./components/dashboard/demandesTR";
 import PerfRDashboard from "./components/dashboard/perfR";
+import Menu from "./pages/Menu";
+import AutomatiqueInformatiqueIndustrielle from "./pages/programmes/AutomatiqueInformatiqueIndustrielle";
+import ConceptionProductionIntegree from "./pages/programmes/ConceptionProductionIntegree";
 function App() {
   return (
     <>
@@ -44,37 +47,40 @@ function App() {
                   element={<Navigate to="/" replace />}
                 />
                 <Route path="/" element={<Home />} />
+                <Route path="/menu" element={<Menu />} />
+                <Route path="/programmes/automatique-informatique-industrielle" element={<AutomatiqueInformatiqueIndustrielle />} />
+                <Route path="/programmes/conception-production-integree" element={<ConceptionProductionIntegree />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/products" element={<Products />}  />
+                <Route path="/products" element={<Products />} />
                 <Route path="/products/:id" element={<DetailPage />} />
                 <Route path="/*" element={<NotFound />} />
                 //preventing user to navigate to auth routes if has loged in already
-                <Route element={<AuthProtected/>}>
-               
+                <Route element={<AuthProtected />}>
+
                   <Route path="/auth/login" element={<Login />} />
-                  <Route path="/login" element={<Navigate to={'/auth/login'}/>} />
+                  <Route path="/login" element={<Navigate to={'/auth/login'} />} />
                 </Route>
                 //protected Routes go here if user is not loged in
                 <Route >
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/dashboard" element={<Dashbord />} >
-           <Route path={'perf'} element={<PerfDashboard />} />
-                      <Route path={'perfR'} element={<PerfRDashboard />} />
+                    <Route path={'perf'} element={<PerfDashboard />} />
+                    <Route path={'perfR'} element={<PerfRDashboard />} />
 
-                               <Route path={'demandesE'} element={<DemandesE />} />
+                    <Route path={'demandesE'} element={<DemandesE />} />
                     <Route path={'congeformE'} element={<CongeformE />} />
                     <Route path={'employeeT'} element={<EmployeeTDashboard />} />
                     <Route path={'employee'} element={<EmployeeDashboard />} />
                     <Route path={'responsable'} element={<ResponsableDashboard />} />
                     <Route path={'admin'} element={<AdminDashboard />} />
                     <Route path={'demandesT'} element={<DemandesT />} />
-                                        <Route path={'demandesR'} element={<DemandesR />} />
-                     <Route path={'demandesTR'} element={<DemandesTR />} />                   
+                    <Route path={'demandesR'} element={<DemandesR />} />
+                    <Route path={'demandesTR'} element={<DemandesTR />} />
                     <Route path={'demandes'} element={<Demandes />} />
                     <Route path={'congeform'} element={<Congeform />} />
-                    <Route path={'my-account'} element={<MyAccount/>}/>
-                    <Route path={'my-orders'} element={<MyOrders/>}/>
-                                        <Route path={'add-employee'} element={<Aform />} />
+                    <Route path={'my-account'} element={<MyAccount />} />
+                    <Route path={'my-orders'} element={<MyOrders />} />
+                    <Route path={'add-employee'} element={<Aform />} />
 
                   </Route>
                 </Route>
@@ -86,7 +92,7 @@ function App() {
       <Toaster
         toastOptions={{
           style: { color: "#ffffff", backgroundColor: "#262626" },
-          position:"bottom-left"
+          position: "bottom-left"
         }}
       />
     </>

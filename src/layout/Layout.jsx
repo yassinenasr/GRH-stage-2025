@@ -1,8 +1,17 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useLocation } from "react-router-dom";
 
 function Layout({ children }) {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/auth/login" || location.pathname === "/login";
+  const isMenuPage = location.pathname === "/menu";
+
+  if (isLoginPage || isMenuPage) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <Header />

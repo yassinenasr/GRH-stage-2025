@@ -67,9 +67,8 @@ const UserActions = () => {
             </div>
 
             <ul
-              className={`${
-                dropDown ? "block" : "hidden"
-              } xl:w-full w-max bad dark:bg-grayshade-500 absolute p-4 -right-10 top-[48px] xl:right-0 xl:left-0 z-50`}
+              className={`${dropDown ? "block" : "hidden"
+                } xl:w-full w-max bad dark:bg-grayshade-500 absolute p-4 -right-10 top-[48px] xl:right-0 xl:left-0 z-50`}
             >
               <Link to="/dashboard/admin">
                 <li>Tableau de bord</li>

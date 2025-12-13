@@ -1,213 +1,160 @@
-import React, { useState, useRef, useEffect } from "react";
-import Transition from "../../utils/transitions/Transition.jsx";
+import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import illustration1 from "../../assets/illustration1.svg";
-import illustration2 from "../../assets/illustration2.svg";
-import illustration3 from "../../assets/illustration3.svg";
-
-import { FaBoltLightning } from "react-icons/fa6";
-import { IoPaperPlane } from "react-icons/io5";
-import { BiSolidMoon } from "react-icons/bi";
+import newsStudentLaptop from "../../assets/news_student_laptop.png";
+import newsGraduation from "../../assets/news_graduation.png";
+import newsElection from "../../assets/news_election.png";
+import { RiArrowRightLine } from "react-icons/ri";
 
 function Features() {
-  const [tab, setTab] = useState(1);
-
-  const tabs = useRef(null);
-
-  const heightFix = () => {
-    if (tabs.current.children[tab]) {
-      tabs.current.style.height =
-        tabs.current.children[tab - 1].offsetHeight + "px";
-    }
-  };
-
   useEffect(() => {
-    heightFix();
     AOS.init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tab]);
+  }, []);
+
+  const newsItems = [
+    {
+      id: 1,
+      date: { day: "12", month: "Déc." },
+      image: newsStudentLaptop,
+      title: "التسجيل الاستثنائي الرابع بالسنة الأولى إجازة",
+      description: "بلاغ التسجيل الاستثنائي الرابع بالسنة الأولى من الشهادة الوطنية للإجازة",
+      details: "بلاغ التسجيل الاستثنائي الرابع بالسنة الأولى من الشهادة الوطنية للإجازة آخر أجل للتسجيل: 15 ديسمبر 2025",
+      isNew: true,
+    },
+    {
+      id: 2,
+      date: { day: "10", month: "Déc." },
+      image: newsGraduation,
+      title: "نتائج انتخابات ممثلي الطلبة بالمجلس العلمي للمعهد",
+      description: "نتائج انتخابات ممثلي الطلبة بالمجلس العلمي للمعهد بعنوان السنة الجامعية 2025-2026",
+      details: "",
+      isNew: true,
+    },
+    {
+      id: 3,
+      date: { day: "06", month: "Déc." },
+      image: newsElection,
+      title: "انتخابات ممثلي الطلبة",
+      description: "قائمة المترشحين لانتخابات ممثلي الطلبة بالمجلس العلمي للمعهد بعنوان السنة الجامعية 2025-2026",
+      details: "",
+      isNew: false, // Based on image, only first two have "New" ribbon? Or maybe all. Let's assume first two based on color. Actually image shows red banner on 3rd too but different text. Let's stick to "New" for consistency or custom text.
+      customBanner: "انتخابات ممثلي الطلبة", // The 3rd one has a full banner
+      customBannerColor: "bg-red-600",
+    },
+  ];
 
   return (
-    <section className="relative bg-gray-200 " style={ {borderTop: "2px solid #000000ff"}}>
-      {/* Section background (needs .relative class on parent and next sibling elements) */}
-      <div
-        className="absolute inset-0 bg-gray-200 dark:bg-grayshade-400 pointer-events-none mb-16"
-        aria-hidden="true"
-      ></div>
-      <div className="absolute left-0 right-0 -top-11 m-auto w-px p-px h-20 bg-gray-200 "></div>
+    <section className="relative bg-white py-12 md:py-20 overflow-hidden">
+      {/* Watermark Background */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 flex justify-center items-start overflow-hidden opacity-20">
+        <span className="text-[15vw] font-bold text-gray-400 whitespace-nowrap uppercase leading-none mt-[-2vw] animate-marquee">
+          Institut Supérieur des Sciences Appliquées et de Technologie de Kairouan
+        </span>
+      </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="pt-12 md:pt-20">
-          {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4 text-purpleshade-400 text-3xl font-extrabold">Les fonctionnalités de notre plateforme</h1>
-            <p className="text-xl text-black">
-                                Des requêtes simples et explicatives pour faciliter l’utilisation de notre système de gestion des ressources humaines (GRH).
-
-            </p>
-          </div>
-
-          {/* Section content */}
-          <div className="md:grid md:grid-cols-12 md:gap-6">
-            {/* Content */}
-            <div
-              className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6"
-              data-aos="fade-right"
-            >
-              
-              {/* Tabs buttons */}
-              <div className="mb-8 md:mb-0">
-                <a
-                  className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
-                    tab !== 1
-                       ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
-                      : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
-                  }`}
-                  href="#0"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTab(1);
-                  }}
-                >
-                  <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">
-Notre Platforme GRH                     </div>
-                    <div className="text-grayshade-50">
-                         Notre plateforme est simple et intuitive : vous y trouverez une page d’accueil générale, une section “À propos” présentant les informations sur les développeurs et les technologies utilisées, ainsi qu’un tableau de bord personnalisé accessible après connexion pour chaque employé.
-
-                    </div>
-                  </div>
-                  <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">
-                    <FaBoltLightning className="text-grayshade-500 dark:text-white" />
-                  </div>
-                </a>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
-                    tab !== 2
-                      ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
-                      : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
-                  }`}
-                  href="#0"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTab(2);
-                  }}
-                >
-                  <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">
-Connexion vers la tableau de bord                    </div>
-                    <div className="text-grayshade-50">
-                         La connexion dépend de votre rôle (Admin, Employé ou Responsable), chaque profil dispose de son propre tableau de bord personnalisé.
-
-                    </div>
-                  </div>
-                  <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">
-                    <IoPaperPlane className="text-grayshade-500 dark:text-white" />
-                  </div>
-                </a>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border-4 transition duration-300 ease-in-out mb-3 ${
-                    tab !== 3
-                      ? "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400 shadow-md  hover:shadow-lg"
-                      : "bg-grayshade-200 text-white dark:bg-grayshade-500 border-purpleshade-400"
-                  }`}
-                  href="#0"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTab(3);
-                  }}
-                >
-                  <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">
-Tableau de bord                   </div>
-                    <div className="text-grayshade-50">
-                      Employee : peut trouver son informations personnelle et ses demandes de congés ou augmentation de salaire et aussi il peut faire les demandes, 
-    RH : peut trouver son informations personnelle et ses demandes de congés ou augmentation de salaire et aussi il peut faire les demandes et aussi il trouve tous les statisques des employee et leur demande et il peut accepter ou refuser, 
-    Responsable : peut faire tous les actions employee et RH mais les demandes de RH il peut accepter ou refuser juste lui meme.
-                    </div>
-                  </div>
-                  <div className="flex justify-center items-center w-8 h-8 bg-lightColor-300 dark:bg-grayshade-300 rounded-full shadow flex-shrink-0 ml-3">
-                    <BiSolidMoon className="text-grayshade-500 dark:text-white" />
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Tabs items */}
-            <div
-              className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1 align-middle"
-              data-aos="zoom-y-out"
-              ref={tabs}
-            >
-              <div className="relative flex flex-col text-center lg:text-right h-full justify-center">
-                {/* Item 1 */}
-                <Transition
-                  show={tab === 1}
-                  appear={true}
-                  className="w-full"
-                  enter="transition ease-in-out duration-700 transform order-first"
-                  enterStart="opacity-0 translate-y-16"
-                  enterEnd="opacity-100 translate-y-0"
-                  leave="transition ease-in-out duration-300 transform absolute"
-                  leaveStart="opacity-100 translate-y-0"
-                  leaveEnd="opacity-0 -translate-y-16"
-                >
-                  <div className="relative inline-flex flex-col">
-                    <img
-                      className="mx-auto rounded"
-                      src={illustration2}
-                      width="500"
-                      alt="Features bg"
-                    />
-                  </div>
-                </Transition>
-                {/* Item 2 */}
-                <Transition
-                  show={tab === 2}
-                  appear={true}
-                  className="w-full"
-                  enter="transition ease-in-out duration-700 transform order-first"
-                  enterStart="opacity-0 translate-y-16"
-                  enterEnd="opacity-100 translate-y-0"
-                  leave="transition ease-in-out duration-300 transform absolute"
-                  leaveStart="opacity-100 translate-y-0"
-                  leaveEnd="opacity-0 -translate-y-16"
-                >
-                  <div className="relative inline-flex flex-col">
-                    <img
-                      className="mx-auto rounded"
-                      src={illustration3}
-                      width="500"
-                      alt="Features bg"
-                    />
-                  </div>
-                </Transition>
-                {/* Item 3 */}
-                <Transition
-                  show={tab === 3}
-                  appear={true}
-                  className="w-full"
-                  enter="transition ease-in-out duration-700 transform order-first"
-                  enterStart="opacity-0 translate-y-16"
-                  enterEnd="opacity-100 translate-y-0"
-                  leave="transition ease-in-out duration-300 transform absolute"
-                  leaveStart="opacity-100 translate-y-0"
-                  leaveEnd="opacity-0 -translate-y-16"
-                >
-                  <div className="relative inline-flex flex-col">
-                    <img
-                      className="mx-auto rounded"
-                      src={illustration1}
-                      width="500"
-                      alt="Features bg"
-                    />
-                  </div>
-                </Transition>
-              </div>
-            </div>
-          </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 z-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-200 pb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Nouveautés
+          </h2>
+          <a href="#" className="flex items-center gap-2 text-blue-500 font-semibold hover:text-blue-600 transition-colors mt-4 md:mt-0">
+            <span className="w-4 h-1 bg-blue-500 inline-block"></span>
+            Toute l'actualité
+          </a>
         </div>
+
+        {/* News Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {newsItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 group hover:shadow-xl transition-shadow duration-300 flex flex-col"
+              data-aos="fade-up"
+              data-aos-delay={item.id * 100}
+            >
+              {/* Image Container */}
+              <div className="relative h-64 overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                />
+
+                {/* Date Badge */}
+                <div className="absolute top-4 left-4 bg-cyan-500 text-white p-2 rounded-md text-center min-w-[3.5rem] shadow-md">
+                  <div className="text-xl font-bold leading-none">{item.date.day}</div>
+                  <div className="text-xs font-medium uppercase">{item.date.month}</div>
+                </div>
+
+                {/* New Ribbon / Banner */}
+                {item.isNew && (
+                  <div className="absolute top-4 right-0 bg-red-500 text-white text-xs font-bold px-3 py-1 shadow-md transform translate-x-2">
+                    <div className="relative">
+                      New
+                      <div className="absolute top-0 right-full w-0 h-0 border-t-[12px] border-t-transparent border-r-[8px] border-r-red-700 border-b-[12px] border-b-transparent mt-[-4px] mr-[-8px] z-[-1]"></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Custom Banner (like the 3rd card) */}
+                {item.customBanner && (
+                  <div className={`absolute top-0 left-0 w-full ${item.customBannerColor} text-white text-center py-2 font-bold shadow-md`}>
+                    {item.customBanner}
+                  </div>
+                )}
+
+                {/* Overlay Text for 1st card style */}
+                {item.id === 1 && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-center p-4">
+                    <h3 className="text-white text-2xl font-bold drop-shadow-md leading-tight">
+                      {item.title}
+                    </h3>
+                  </div>
+                )}
+              </div>
+
+              {/* Content */}
+              <div className="p-6 flex-grow flex flex-col justify-between text-right" dir="rtl">
+                <div>
+                  {item.id !== 1 && (
+                    <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">
+                      {item.description}
+                    </h3>
+                  )}
+                  {item.id === 1 && (
+                    <>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight">
+                        {item.description}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                        {item.details}
+                      </p>
+                    </>
+                  )}
+                  {item.id !== 1 && (
+                    <h3 className="text-gray-800 font-medium mb-2">
+                      {item.title}
+                    </h3>
+                  )}
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-end text-blue-600 font-bold group-hover:text-blue-700 transition-colors">
+                  <span className="ml-2">Plus de détails</span>
+                  <span className="w-6 h-1 bg-blue-500 inline-block"></span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Large Arrow Decoration */}
+        <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 text-cyan-500 opacity-80 pointer-events-none">
+          <svg width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 10 L80 75 L10 140" stroke="currentColor" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+
       </div>
     </section>
   );

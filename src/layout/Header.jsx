@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeSwitcher from "../components/theme/ThemeSwitcher";
-import AbstractDesign from "../assets/AbstractDesign.svg";
-import UserActions from "../components/UserActions";
-import { RiMenu3Fill } from "react-icons/ri";
-
+import { RiMenu3Fill, RiSearchLine, RiUser3Line, RiArrowDownSFill, RiCloseLine } from "react-icons/ri";
+import buildingHero from "../assets/issat_building_new.jpg";
+import issatMenuBg from "../assets/issat_menu_bg.jpg";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import {
+  TbUser,
+  TbLogout2,
+  TbLogin2,
+  TbChevronDown,
+} from "react-icons/tb";
 function Header() {
-  const [isNavOpen, openNavOpen] = useState(false);
   const [stickNav, setStickNav] = useState(false);
 
   useEffect(() => {
@@ -22,61 +28,64 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const openNavHandler = () => {
-    openNavOpen((prev) => !prev);
-  };
-
   return (
     <nav
-      className={`${
-        stickNav ? "fixed" : "[position:initial]"
-      } z-[100] xl:relative py-4 px-1 md:px-14 lg:px-30 w-full border-b border-grayshade-300 bg-lightColor-100 dark:bg-grayshade-500`}
+      className={`${stickNav ? "fixed bg-white/95 backdrop-blur-sm shadow-lg" : "absolute bg-white/90 backdrop-blur-sm shadow-md"
+        } z-[100] top-0 w-full transition-all duration-300`}
     >
-      <div
-        onClick={openNavHandler}
-        className="ham-container z-[99] xl:hidden w-10 h-10 absolute left-2 top-2 cursor-pointer p-1 flex justify-around items-center flex-col"
-      >
-        <RiMenu3Fill className="text-purpleshade-300 text-2xl font-bold" />
-      </div>
+      <div className="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-24">
+          {/* Logo Section */}
+          <div className="flex-shrink-0 flex items-center gap-4">
+            <Link to="/" className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <div className="text-4xl font-bold text-cyan-500 tracking-tighter">
+                  <span className="text-cyan-600">i</span>ssat
+                </div>
+              </div>
+              <span className="text-[10px] font-semibold tracking-widest uppercase text-gray-600">
+                Institut Supérieur des Sciences Appliquées et de Technologie <br />Kairouan
+              </span>
+            </Link>
+          </div>
 
-     
+          {/* Right Actions Section */}
+          <div className="hidden md:flex items-center space-x-6">
+            {/* Search */}
+            <button className="text-gray-600 hover:text-cyan-500 transition-colors">
+              <RiSearchLine size={20} />
+            </button>
 
-      <div className="w-full flex items-center justify-end min-[490px]:justify-around">
-        <Link
-          className="lg:text-5xl md:text-4xl sm:text-xl font-extrabold xl:mr-8 z-20 text-gray-800 dark:text-white"
-          to={"/"}
-        >
-          <h1>MTC ENET'Com</h1>
-        </Link>
+            {/* Language Selector */}
+            <div className="flex items-center cursor-pointer gap-1 text-sm font-medium transition-colors text-gray-600 hover:text-cyan-500">
+              <span>Français</span>
+              <RiArrowDownSFill />
+            </div>
 
-        <div
-          className={`z-[97] ${
-            isNavOpen ? "block" : "hidden"
-          } xl:block bg-lightColor-100 dark:bg-grayshade-500 xl:border-2 border-grayshade-50 dark:border-grayshade-300 xl:rounded-full xl:px-8 flex flex-col items-center justify-center h-screen top-0 left-0 fixed xl:h-min xl:[position:initial]`}
-        >
-          <ul className="flex flex-col items-center xl:flex-row min-w-max w-screen xl:w-[400px] xl:justify-around text-xl text-gray-800 dark:text-white">
-            <li className="my-5 xl:my-2">
-              <Link to="/" onClick={() => openNavOpen(false)}>
-                Accueil	
-              </Link>
-            </li>
-            
-            <li className="my-5 xl:my-2">
-              <Link to="/about" onClick={() => openNavOpen(false)}>
-                À propos	
-              </Link>
-            </li>
-          </ul>
-        </div>
+            {/* Extranet Button */}
+            <Link
+              className="text-sm md:text-base xl:text-xl mx-2 flex items-center text-gray-800 hover:text-cyan-600 transition-colors"
+              to="/auth/login"
+            >
+              <TbLogin2 className="mr-2" />
+              Se Connecter
+            </Link>
 
-        <div className="flex items-center justify-between text-md xl:text-xl">
-          <UserActions />
-          <div
-            className={`justify-start items-center z-[98] xl:flex ${
-              isNavOpen ? "flex" : "hidden"
-            }`}
-          >
-            <ThemeSwitcher />
+            {/* Menu Button */}
+            <Link
+              to="/menu"
+              className="flex items-center gap-2 font-bold tracking-widest text-sm transition-colors text-gray-600 hover:text-cyan-500"
+            >
+              <RiMenu3Fill size={24} />
+              <span>MENU</span>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <Link to="/menu" className="text-gray-600 p-2">
+              <RiMenu3Fill size={24} />
+            </Link>
           </div>
         </div>
       </div>

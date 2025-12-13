@@ -2,83 +2,59 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-import AbstractDesign from "../../assets/AbstractDesign.svg";
+import buildingHero from "../../assets/isima_building.jpg";
+import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 
 function HeroHome() {
   useEffect(() => {
     AOS.init();
   }, []);
 
-  return ( 
-    <section className="relative overflow-hidden  bg-gray-200">
+  return (
+    <section className="relative h-screen overflow-hidden">
       {/* Background Image */}
-      
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${buildingHero})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/20"></div>
+      </div>
 
-   <div
-  className="absolute xl:left-1/2 lg:left-1/3 hidden lg:block transform -translate-x-1/2 bottom-0 pointer-events-none -z-30 text-gray-300"
-  aria-hidden="true"
->
-  <svg
-    width="1200"
-    height="490"
-    viewBox="0 0 1360 578"
-    xmlns="http://www.w3.org/2000/svg"
-    className="fill-current"
-    role="img"
-    aria-label="Background decorative circles"
-  >
-    <g fillRule="evenodd">
-      <circle cx="1232" cy="128" r="128" fill="currentColor" />
-      <circle cx="155" cy="443" r="64" fill="currentColor" />
-    </g>
-  </svg>
-</div>
-
-
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 ">
-        <div className="pt-28 pb-16 md:pt-36 md:pb-20 lg:pt-44">
-          <div className="text-center pb-12 md:pb-16">
-            <h1
-              className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 border-color-black"
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 h-full flex flex-col justify-center items-center text-center">
+        <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+          <h1
+            className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-wide uppercase drop-shadow-lg"
+            data-aos="zoom-y-out"
+          >
+            Innovation Numérique
+          </h1>
+          <div className="max-w-3xl mx-auto">
+            <p
+              className="text-xl md:text-2xl text-white mb-8 font-light tracking-wider drop-shadow-md uppercase"
               data-aos="zoom-y-out"
+              data-aos-delay="150"
             >
-              Gestion RH{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-black dark:to-grayshade-400 ">
-                GRH
-              </span>
-            </h1>
-            <div className="max-w-3xl mx-auto">
-              <p
-                className="text-xl text-black mb-8"
-                data-aos="zoom-y-out"
-                data-aos-delay="150"
-              >
-                Un système RH intelligent pour simplifier la gestion des employés, automatiser les processus et améliorer la productivité.
-              </p>
-              <div
-  className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center sm:space-x-6 space-y-4 sm:space-y-0"
-  data-aos="zoom-y-out"
-  data-aos-delay="300"
->
-  <Link
-    to="/login"
-    className="btn w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-black bg-white hover:bg-purple-700 shadow-lg transition duration-300 ease-in-out"
-  >
-    Se Connecter
-  </Link>
-  <Link
-    to="/about"
-    className="btn w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-white bg-black hover:bg-black shadow-md transition duration-300 ease-in-out"
-  >
-    Learn more
-  </Link>
-</div>
-
-            </div>
+              Construire l'avenir à travers<br />l'excellence technologique
+            </p>
           </div>
         </div>
       </div>
+
+      {/* Slider Navigation Arrows (Visual Only) */}
+      <div className="absolute top-1/2 left-4 md:left-8 transform -translate-y-1/2 z-20 text-white/50 hover:text-white transition-colors cursor-pointer border border-white/30 rounded-full p-2 hover:bg-white/10">
+        <RiArrowLeftLine size={32} />
+      </div>
+      <div className="absolute top-1/2 right-4 md:right-8 transform -translate-y-1/2 z-20 text-white/50 hover:text-white transition-colors cursor-pointer border border-white/30 rounded-full p-2 hover:bg-white/10">
+        <RiArrowRightLine size={32} />
+      </div>
+
+      {/* Scroll Indicator or Bottom Decoration could go here */}
     </section>
   );
 }
