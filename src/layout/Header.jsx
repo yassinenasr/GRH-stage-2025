@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import ThemeSwitcher from "../components/theme/ThemeSwitcher";
 import { RiMenu3Fill, RiSearchLine, RiUser3Line, RiArrowDownSFill, RiCloseLine } from "react-icons/ri";
 import buildingHero from "../assets/issat_building_new.jpg";
-import issatMenuBg from "../assets/issat_menu_bg.jpg";
+import logo from "../assets/logo.png";
+import logo1 from "../assets/logo1.png";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import {
@@ -34,33 +35,19 @@ function Header() {
         } z-[100] top-0 w-full transition-all duration-300`}
     >
       <div className="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-32">
           {/* Logo Section */}
-          <div className="flex-shrink-0 flex items-center gap-4">
-            <Link to="/" className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <div className="text-4xl font-bold text-cyan-500 tracking-tighter">
-                  <span className="text-cyan-600">i</span>ssat
-                </div>
-              </div>
-              <span className="text-[10px] font-semibold tracking-widest uppercase text-gray-600">
-                Institut Supérieur des Sciences Appliquées et de Technologie <br />Kairouan
-              </span>
+          <div className="flex-shrink-0 flex items-center gap-4 h-full">
+            <Link to="/" className="flex items-center gap-4 h-full">
+              <img src={logo} alt="ISSAT Logo" className="h-full w-auto object-contain" />
             </Link>
           </div>
-
           {/* Right Actions Section */}
           <div className="hidden md:flex items-center space-x-6">
             {/* Search */}
-            <button className="text-gray-600 hover:text-cyan-500 transition-colors">
-              <RiSearchLine size={20} />
-            </button>
 
-            {/* Language Selector */}
-            <div className="flex items-center cursor-pointer gap-1 text-sm font-medium transition-colors text-gray-600 hover:text-cyan-500">
-              <span>Français</span>
-              <RiArrowDownSFill />
-            </div>
+
+
 
             {/* Extranet Button */}
             <Link

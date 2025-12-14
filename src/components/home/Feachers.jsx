@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import newsStudentLaptop from "../../assets/news_student_laptop.png";
-import newsGraduation from "../../assets/news_graduation.png";
-import newsElection from "../../assets/news_election.png";
+import results from "../../assets/results.png";
+import calendrier from "../../assets/calendrier.png";
 import { RiArrowRightLine } from "react-icons/ri";
 
 function Features() {
@@ -16,31 +16,31 @@ function Features() {
       id: 1,
       date: { day: "12", month: "Déc." },
       image: newsStudentLaptop,
-      title: "التسجيل الاستثنائي الرابع بالسنة الأولى إجازة",
-      description: "بلاغ التسجيل الاستثنائي الرابع بالسنة الأولى من الشهادة الوطنية للإجازة",
-      details: "بلاغ التسجيل الاستثنائي الرابع بالسنة الأولى من الشهادة الوطنية للإجازة آخر أجل للتسجيل: 15 ديسمبر 2025",
+      title: "Avis d'inscription 2025-2026",
+      description:"Avis d'inscription 2025-2026",
+      details: " Date limite d'inscription : 15 décembre 2025.",
       isNew: true,
     },
     {
       id: 2,
-      date: { day: "10", month: "Déc." },
-      image: newsGraduation,
-      title: "نتائج انتخابات ممثلي الطلبة بالمجلس العلمي للمعهد",
-      description: "نتائج انتخابات ممثلي الطلبة بالمجلس العلمي للمعهد بعنوان السنة الجامعية 2025-2026",
+      date: { day: "27", month: "Juin" },
+      image: results,
+      title: "Résultat session de rattrapage",
+      description: "Les PVs de délibération de la session de rattrapage sont disponibles sur l'espace extranet.",
       details: "",
       isNew: true,
     },
     {
       id: 3,
-      date: { day: "06", month: "Déc." },
-      image: newsElection,
-      title: "انتخابات ممثلي الطلبة",
-      description: "قائمة المترشحين لانتخابات ممثلي الطلبة بالمجلس العلمي للمعهد بعنوان السنة الجامعية 2025-2026",
+      date: { day: "14", month: "Juin" },
+      image: calendrier,
+      title: "Le calendrier des examens de la session rattrapage",
+      description: "Les calendriers de la session de rattrapage sont disponible sur l'espace extranet.",
       details: "",
-      isNew: false, // Based on image, only first two have "New" ribbon? Or maybe all. Let's assume first two based on color. Actually image shows red banner on 3rd too but different text. Let's stick to "New" for consistency or custom text.
-      customBanner: "انتخابات ممثلي الطلبة", // The 3rd one has a full banner
-      customBannerColor: "bg-red-600",
+      isNew: true,
     },
+     
+    
   ];
 
   return (
