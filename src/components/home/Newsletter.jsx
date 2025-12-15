@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import telecomDay from '../../assets/manifestation_telecom_day.png';
-import forum from '../../assets/manifestation_forum.png';
+import event1 from '../../assets/event1.jpg';
+import event2 from'../../assets/event2.jpg';
 import { FaCalendarAlt } from 'react-icons/fa';
 
 function Newsletter() {
@@ -13,15 +13,15 @@ function Newsletter() {
   const events = [
     {
       id: 1,
-      image: telecomDay,
-      date: "4. Feb. 2023",
-      title: "Telecom Day"
+      image: event1,
+      date: "13. Dec. 2025",
+      title: "HACK V 1.0"
     },
     {
       id: 2,
-      image: forum,
-      date: "18. Nov. 2023",
-      title: "8ème forum annuel de l'école IEEE 8.0"
+      image: event2,
+      date: "11. Dec. 2025",
+      title: "Be there❤️‍🔥🐎"
     }
   ];
 

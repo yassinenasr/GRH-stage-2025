@@ -8,14 +8,14 @@ function FeaturesBlock() {
       number: "+ 0",
       icon: <FaUserGraduate className="w-16 h-16 text-gray-200" />,
       title: "Étudiants",
-      subtitle: "L'année Universitaire 2023/2024"
+      subtitle: "L'année Universitaire 2024/2025"
     },
     {
       id: 2,
       number: "+ 0",
       icon: <FaChalkboardTeacher className="w-16 h-16 text-gray-200" />,
       title: "Enseignants Permanents",
-      subtitle: "L'année Universitaire 2023/2024"
+      subtitle: "L'année Universitaire 2024/2025"
     },
     {
       id: 3,

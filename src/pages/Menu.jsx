@@ -51,6 +51,11 @@ function Menu() {
             { name: "Dossier de candidature", path: "/candidature/dossier" },
             { name: "Dates importantes", path: "/candidature/dates" },
             { name: "Conditions d'admission", path: "/candidature/conditions" }
+        ],
+        vieEtudiante: [
+            { name: "Clubs", path: "/vie-etudiante/clubs" },
+            { name: "Manifestations", path: "/vie-etudiante/manifestations" },
+            { name: "Activités Sportives", path: "/vie-etudiante/activites-sportives" }
         ]
     };
 
@@ -95,16 +100,17 @@ function Menu() {
                     {/* Links Column */}
                     <div className="flex flex-col justify-center space-y-2 md:space-y-3 w-full md:w-1/2">
                         <Link to="/" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
-                            ISSAT Kairouan
+                            ISSAT
                         </Link>
                         <div
                             className="relative"
-                            onMouseEnter={() => setActiveSubmenu('formation')}
-                            onMouseLeave={() => setActiveSubmenu(null)}
                         >
-                            <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit underline decoration-2 underline-offset-8">
+                            <button
+                                onClick={() => setActiveSubmenu(activeSubmenu === 'formation' ? null : 'formation')}
+                                className={`text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit text-left ${activeSubmenu === 'formation' ? 'underline decoration-2 underline-offset-8' : ''}`}
+                            >
                                 Formation
-                            </Link>
+                            </button>
                         </div>
                         <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
                             Recherche
@@ -115,23 +121,26 @@ function Menu() {
                         <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
                             Entreprises
                         </Link>
-                        <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
-                            Vie Estudiantine
-                        </Link>
+                        <div
+                            className="relative"
+                        >
+                            <button
+                                onClick={() => setActiveSubmenu(activeSubmenu === 'vieEtudiante' ? null : 'vieEtudiante')}
+                                className={`text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit text-left ${activeSubmenu === 'vieEtudiante' ? 'underline decoration-2 underline-offset-8' : ''}`}
+                            >
+                                Vie Etudiante
+                            </button>
+                        </div>
                         <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
                             International
                         </Link>
-                        <Link to="#" className="text-1xl md:text-3xl font-bold hover:text-cyan-400 transition-colors w-fit">
-                            4C
-                        </Link>
+                        
                     </div>
 
                     {/* Submenu Panel */}
                     {activeSubmenu === 'formation' && (
                         <div
                             className="w-full md:w-1/2 pl-0 md:pl-12 mt-8 md:mt-0 transform -translate-x-20"
-                            onMouseEnter={() => setActiveSubmenu('formation')}
-                            onMouseLeave={() => setActiveSubmenu(null)}
                         >
                             <h3 className="text-lg md:text-xl font-bold mb-6 text-yellow-400">
                                 Organigramme
@@ -209,6 +218,24 @@ function Menu() {
                                         </Link>
                                     ))}
                                 </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeSubmenu === 'vieEtudiante' && (
+                        <div
+                            className="w-full md:w-1/2 pl-0 md:pl-12 mt-8 md:mt-0 transform -translate-x-20"
+                        >
+                            <div className="flex flex-col space-y-3">
+                                {categoryPrograms['vieEtudiante']?.map((program, index) => (
+                                    <Link
+                                        key={index}
+                                        to={program.path}
+                                        className="text-base md:text-lg hover:text-cyan-400 transition-colors"
+                                    >
+                                        {program.name}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
                     )}
