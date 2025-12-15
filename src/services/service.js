@@ -1,20 +1,27 @@
-import { getRequest,putRequest , deleteRequest , postRequest } from "./client";
+import { getRequest, putRequest, deleteRequest, postRequest } from "./client";
 import CryptoJS from "crypto-js";
 import axios from "axios";
 
 const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
-const APIS_URL = "http://localhost:3000";
+const APIS_URL = "http://localhost:3537"; // This is defined
 const AUTH_URL = "/login";
 
+// service.js
+// service.js - FIXED
 export const login = async (email, mot_de_passe) => {
-  const result = await postRequest(APIS_URL + AUTH_URL, { email, mot_de_passe }).then((response) => response.result);
+  const result = await postRequest("/login", { email, mot_de_passe }).then(res => res.result);
 
   if (result?.accessToken) {
     const encryptedToken = CryptoJS.AES.encrypt(result.accessToken, SECRET_KEY).toString();
     localStorage.setItem("authToken", encryptedToken);
-  }  
+  }
   return result?.accessToken;
 };
+
+ 
+
+ 
+
 export const logout = async () => {
   try {
     await postRequest(APIS_URL + "/logout", {});
@@ -144,4 +151,8 @@ export const getDemandByType = async (type) => {
 export const getEvaluations = async () => {
   return await getRequest(APIS_URL + "/evaluations").then(res => res.evaluations);
 }
+
+export const getUserByCin = async (cin) => {
+  return await getRequest(`${APIS_URL}/user/${cin}`);
+};
 

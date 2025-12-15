@@ -17,12 +17,11 @@ export const getDecryptedToken = () => {
 };
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: "http://localhost:3537", // backend
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
+
 
 api.interceptors.request.use((config) => {
   const token = getDecryptedToken();

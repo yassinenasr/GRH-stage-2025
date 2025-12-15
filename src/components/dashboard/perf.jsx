@@ -1,293 +1,108 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUsers, FaCalendarAlt, FaChartBar, FaSignOutAlt, FaEnvelope } from "react-icons/fa";
-import { Doughnut, Bar } from "react-chartjs-2";
-import { getEmployees, getCongesByMatricule } from "../../services/service"; 
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-} from "chart.js";
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
-import { logout } from "../../services/service";
-import { useAuth } from '../../contexts/AuthenticateProvider';
-export const handleLogout = async ({ logOut }) => {
-  try {
-    await logout();     // backend logout
-    logOut();           // clear local state/context
-    window.location.href = "/home"; // full page reload
-  } catch (error) {
-    console.error("Logout failed", error);
-  }
-};
-export default function PerfDashboard() {
+import { useParams, useNavigate } from "react-router-dom";
+import { getUserByCin } from "../../services/service";
+import { FaUserGraduate } from "react-icons/fa";
+import { IoMdSchool } from "react-icons/io";
+
+const perf = () => {
+  const { cin } = useParams();
   const navigate = useNavigate();
-  const [employees, setEmployees] = useState([]);
-  const [conges, setConges] = useState([]);
-  const [matricule, setMatricule] = useState(null);
- const { logOut } = useAuth(); // ✅ this is needed for logout to work
-  const rest = conges.length > 0
-    ? conges.reduce((total, c) => total + c.nbjour, 0)
-    : 0;
 
-  const selectedEmployee = employees.find(emp => emp.matricule === matricule);
+  
 
-  // Load employees list
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const data = await getEmployees();
-        setEmployees(data);
-        if (data.length > 0) {
-          setMatricule(data[0].matricule); // initial selection
-        }
-      } catch (error) {
-        console.error("Erreur lors de la récupération des employés :", error);
-      }
-    };
-    fetchEmployees();
-  }, []);
-
-  // Load congés for selected matricule
-  useEffect(() => {
-    if (!matricule) return;
-
-    const fetchConges = async () => {
-      try {
-        const data = await getCongesByMatricule(matricule);
-        setConges(data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des congés :", error);
-      }
-    };
-
-    fetchConges();
-  }, [matricule]);
+ 
 
   return (
-    <div className="min-h-screen flex">
-      <aside className="w-64 bg-gray-900 text-white flex flex-col p-4">
-        <h1 className="text-2xl font-bold mb-6">Tableau de bord Admin</h1>
-        <nav className="flex flex-col gap-4">
-          <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded">
-            <FaUsers /> Employés
-          </button>
-          <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded" onClick={() => navigate("/dashboard/demandesT")}>
-            <FaCalendarAlt /> Demandes de congé et augmentations de salaire
-          </button>
-          <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded" onClick={() => navigate("/dashboard/demandes")}>
-            <FaEnvelope /> Mes demandes 
-          </button>
-          <button className="flex items-center gap-2 hover:bg-blue-700 p-2 rounded" onClick={() => navigate("/dashboard/perf")}>
-            <FaChartBar /> Performance des employés
-          </button>
-        </nav>
-        <div className="mt-auto pt-6">
-          <button className="flex items-center gap-2 text-red-300 hover:text-red-500" onClick={() => handleLogout({ logOut })}>
-            <FaSignOutAlt /> Déconnexion
-          </button>
-        </div>
-      </aside>
-
-      <main className="flex-1 bg-gray-100 p-6">
-        <h2 className="text-3xl font-semibold mb-6">Bienvenue, Admin</h2>
-
-        {/* Employee selector */}
-        <label htmlFor="selectEmp" className="block font-medium mb-2">
-          Choisir un employé :
-        </label>
-        <select
-          id="selectEmp"
-          value={matricule || ""}
-          onChange={e => setMatricule(e.target.value)}
-          className="border rounded p-2 mb-6"
+    <div className="p-6 bg-gray-50 min-h-screen font-sans">
+      {/* Header */}
+      <div className="flex items-end gap-1 mb-6 border-b px-4 pt-4 bg-white shadow-sm">
+        <button
+          onClick={() => navigate("/dashboard/admin")}
+          className="px-4 py-2 text-gray-500 hover:text-blue-600 text-sm"
         >
-          {employees.map(emp => (
-            <option key={emp.matricule} value={emp.matricule}>
-              {emp.nom} {emp.prenom} ({emp.matricule})
-            </option>
-          ))}
-        </select>
+          Accueil
+        </button>
+        <div className="px-4 py-2 text-gray-800 font-medium text-sm bg-white border rounded-t-lg">
+          Détails de l'étudiant :
+          {" "}Doe Son
+        </div>
+      </div>
 
-        {/* Employee info cards */}
-        {selectedEmployee ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Matricule :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.matricule}</p>
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* LEFT CARD */}
+        <div className="w-full md:w-1/4">
+          <div className="bg-white rounded-lg shadow-sm p-6 text-center border">
+            <div className="w-32 h-32 rounded-full mx-auto mb-4 border shadow">
+              <img
+                src="C:\Users\yassi\OneDrive\Bureau\GRH\MTC-PROJECT\src\assets\man.jpg"
+                alt="profile"
+                className="w-full h-full rounded-full object-cover"
+              />
             </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Email :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.email}</p>
+
+            <h2 className="text-xl font-bold">
+              Doe Son
+            </h2>
+
+            <div className={`mt-2 font-medium ${
+              "text-green-600" 
+            }`}>
+             🏢 Administration
             </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Poste :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.poste}</p>
-            </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Grade :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.grade}</p>
-            </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Salaire :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.salaire}</p>
-            </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Type :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{selectedEmployee.type}</p>
-            </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Nombre total de demandes  :</h3>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{employees.length}</p>
-            </div>
-            <div className="bg-white shadow p-4 rounded-xl">
-              <h3 className="text-xl font-medium">Jours de congé restants :</h3>
-              <p className="text-3xl font-bold text-orange-500 mt-2">
-                {conges.length > 0 ? conges.reduce((total, c) => total + c.nbjour, 0) : "0"}
-              </p>
+
+            <div className="text-left mt-6 space-y-3 border-t pt-4">
+              <div className="flex justify-between">
+                <span className="text-gray-500">CIN :</span>
+                <span className="font-semibold">U123457</span>
+              </div>
+
             </div>
           </div>
-        ) : (
-          <p>Chargement des informations de l'employé...</p>
-        )}
+        </div>
 
-        {/* Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* RIGHT CONTENT */}
+        <div className="w-full md:w-3/4">
+          <div className="bg-white rounded-lg shadow-sm border">
+            <div className="border-b px-6 py-4 bg-blue-50 text-blue-600 font-medium">
+              ℹ️ Informations générales
+            </div>
 
-  <div
-    className="dataCard categoryCard bg-white shadow p-4 rounded-xl w-96 mx-auto mb-8"
-    style={{ height: 320 }}
-  >
-    <Doughnut
-      data={{
-        labels: ["Demandes de congé", "Demandes d'augmentation de salaire"],
-        datasets: [
-          {
-            data: [8, 34],
-            backgroundColor: ["#FF6384", "#36A2EB"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB"],
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false, // important ici aussi
-        plugins: {
-          legend: { position: "top" },
-          title: { display: true, text: "Statistiques des demandes" },
-        },
-      }}
-      style={{ width: "100%", height: "100%" }}
-    />
-  </div>
+            <div className="p-8 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <span className="text-gray-600 font-medium">Nom & Prénom :</span>
+                <span className="md:col-span-2 font-semibold">
+                  Doe Son
+                </span>
+              </div>
 
-  <div
-    className="dataCard categoryCard bg-white shadow p-4 rounded-xl w-96 mx-auto mb-8"
-    style={{ height: 320 }}
-  >
-    <Bar
-      data={{
-        labels: ["Accepté", "En attente", "Refusé"],
-        datasets: [
-          {
-            label: "Nombre de demandes",
-            data: [20, 5, 3],
-            backgroundColor: [
-              "rgba(54, 162, 235, 0.7)",
-              "rgba(255, 206, 86, 0.7)",
-              "rgba(255, 99, 132, 0.7)",
-            ],
-            borderColor: [
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(255, 99, 132, 1)",
-            ],
-            borderWidth: 1,
-            borderRadius: 5,
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: "top" },
-          title: {
-            display: true,
-            text: "Répartition des demandes selon leur statut",
-            font: { size: 18, weight: "bold" },
-          },
-          tooltip: {
-            enabled: true,
-            callbacks: {
-              label: (context) =>
-                `${context.parsed.y} demande${context.parsed.y > 1 ? "s" : ""}`,
-            },
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { stepSize: 1 },
-            title: { display: true, text: "Nombre de demandes" },
-          },
-          x: {
-            title: { display: true, text: "Statut de la demande" },
-          },
-        },
-      }}
-      style={{ width: "100%", height: "100%" }}
-    />
-  </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <span className="text-gray-600 font-medium">CIN :</span>
+                <span className="md:col-span-2">U123457</span>
+              </div>
 
-  <div
-    className="dataCard categoryCard bg-white shadow p-4 rounded-xl w-96 mx-auto mb-8"
-    style={{ height: 320 }}
-  >
-    <Doughnut
-      data={{
-        labels: ["Total des jours de congé acquis", "Solde de congés restants"],
-        datasets: [
-          {
-            data: [18, rest],
-            backgroundColor: ["#607D8B", "#3F51B5"],
-            hoverBackgroundColor: ["#455A64", "#303F9F"],
-          },
-        ],
-      }}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: "top" },
-          title: {
-            display: true,
-            text: "Bilan des congés : jours acquis et jours restants",
-            font: { size: 16, weight: "bold" },
-          },
-          tooltip: {
-            enabled: true,
-            callbacks: {
-              label: (context) => {
-                const label = context.label || "";
-                const value = context.parsed || 0;
-                return `${label}: ${value} jour${value > 1 ? "s" : ""}`;
-              },
-            },
-          },
-        },
-      }}
-      style={{ width: "100%", height: "100%" }}
-    />
-  </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <span className="text-gray-600 font-medium">Email :</span>
+                <span className="md:col-span-2">
+                 son.doe@test.com
+                  <span className="text-green-600 ml-2 text-sm">(Vérifié)</span>
+                </span>
+              </div>
 
-</div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <span className="text-gray-600 font-medium">Type :</span>
+                <span className="md:col-span-2 capitalize font-semibold">
+                  
+                 🏢 Administration
+                </span>
+              </div>
 
-      </main>
+             
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default perf;

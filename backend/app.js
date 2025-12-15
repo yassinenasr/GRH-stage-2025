@@ -89,7 +89,7 @@ app.post("/conges", async (req, res) => {
     await congeRepo.save(newConge);
     res.status(201).json({ message: "Demande de congé ajoutée", conge: newConge });
   } catch (error) {
-    res.status(500).json({ message: "Erreur lors de l'ajout de la demande", error });
+    res.status(500).json({ message: "Erreur lors de l'ajout de la de  mande", error });
   }
 });
 // get all evaluations

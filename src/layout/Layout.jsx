@@ -7,8 +7,9 @@ function Layout({ children }) {
   const location = useLocation();
   const isLoginPage = location.pathname === "/auth/login" || location.pathname === "/login";
   const isMenuPage = location.pathname === "/menu";
+  const isDashboardPage = location.pathname.startsWith("/dashboard");
 
-  if (isLoginPage || isMenuPage) {
+  if (isLoginPage || isMenuPage || isDashboardPage) {
     return <>{children}</>;
   }
 

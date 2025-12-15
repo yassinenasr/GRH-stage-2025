@@ -1,0 +1,22 @@
+[DEBUG] Registering /login route
+Database connected
+Users found: [
+  {
+    cin: 'U123456',
+    nom: 'Doe',
+    prenom: 'John',
+    email: 'john.doe@test.com',
+    mot_de_passe: '$2b$10$SHbO/a5yj15cq.LVg3G5uOZ40fJKmYb6W9AWEEKlIyzzrZC75J0yW',
+    type: 'etudiant',
+    niveau_etude: '1'
+  },
+  {
+    cin: 'U123457',
+    nom: 'Doe',
+    prenom: 'son',
+    email: 'son.doe@test.com',
+    mot_de_passe: '$2b$10$Awy.md8UPpY8hKmrqMWOLOWw44nA5SbFcZJjuK2eKh4z1/R0reO4u',
+    type: 'administration',
+    niveau_etude: '1'
+  }
+]

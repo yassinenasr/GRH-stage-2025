@@ -33,6 +33,7 @@ import PerfRDashboard from "./components/dashboard/perfR";
 import Menu from "./pages/Menu";
 import AutomatiqueInformatiqueIndustrielle from "./pages/programmes/AutomatiqueInformatiqueIndustrielle";
 import ConceptionProductionIntegree from "./pages/programmes/ConceptionProductionIntegree";
+
 function App() {
   return (
     <>
@@ -54,13 +55,12 @@ function App() {
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:id" element={<DetailPage />} />
                 <Route path="/*" element={<NotFound />} />
-                //preventing user to navigate to auth routes if has loged in already
+                {/* preventing user to navigate to auth routes if has loged in already */}
                 <Route element={<AuthProtected />}>
-
                   <Route path="/auth/login" element={<Login />} />
                   <Route path="/login" element={<Navigate to={'/auth/login'} />} />
                 </Route>
-                //protected Routes go here if user is not loged in
+                {/* protected Routes go here if user is not loged in */}
                 <Route >
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/dashboard" element={<Dashbord />} >
@@ -81,7 +81,6 @@ function App() {
                     <Route path={'my-account'} element={<MyAccount />} />
                     <Route path={'my-orders'} element={<MyOrders />} />
                     <Route path={'add-employee'} element={<Aform />} />
-
                   </Route>
                 </Route>
               </Routes>
